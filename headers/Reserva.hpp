@@ -3,22 +3,36 @@
 class Reserva {
 private:
     Viagem viagem;
-    string nomePassageiro;
+    string cpf;
     double valorPassagem;
     Parada origem;
     Parada destino;
 
 public:
     // construtores
-    Reserva(Viagem viagem, string nomePassageiro, double valorPassagem);
-    Reserva(Viagem viagem, string nomePassageiro, double valorPassagem, Parada origem, Parada destino);
+    Reserva(Viagem viagem, string cpf);
+    Reserva(Viagem viagem, string cpf, Parada origem, Parada destino);
 
+    // metodos estaticos
+    static bool realizarReserva(Data data, string cpf);
+    static bool realizarReserva(Data data, string cpf, Parada origem, Parada destino);
+
+    static bool cancelarReserva(Data data, string cpf);
+
+    static bool validarCPF(string cpf); 
+    
+    // outros metdos 
+    bool cancelarReserva();
+    
+    bool calcularValorPassagem(Parada origem, Parada destino);
+    bool calcularValorPassagem();
+    
     // getteres e setteres
     Viagem getViagem();
     void setViagem(Viagem viagem);
 
-    string getNomePassageiro();
-    void setNomePassageiro(string nomePassageiro);
+    string getCPF();
+    void setCPF(string cpf);
 
     double getValorPassagem();
     void setValorPassagem(double valorPassagem);

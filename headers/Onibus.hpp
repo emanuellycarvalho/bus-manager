@@ -11,7 +11,7 @@ private:
 
 public:
     // construtores
-    Onibus(string placa, int numAssentosLivres, double velocidadeMedia);
+    Onibus(string placa, int numAssentosLivres, double velocidadeMedia); // valor padrão: 5,00
     Onibus(string placa, int numAssentosLivres, double velocidadeMedia, double valorKm);
 
     // getteres e setteres
