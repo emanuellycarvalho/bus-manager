@@ -1,40 +1,33 @@
-#include "Viagem.hpp";
+#include "Viagem.hpp"
 
 class Reserva {
-private:
-    Viagem *viagem;
-    string cpf;
-    double valorPassagem;
-    Parada *origem;
-    Parada *destino;
+    private:
+        Viagem *viagem;
+        string cpf;
+        double valorPassagem;
+        Parada *origem;
+        Parada *destino;
+        bool ativa;
 
-public:
-    // construtores
-    Reserva(Viagem *viagem, string cpf);
-    Reserva(Viagem *viagem, string cpf, Parada* origem, Parada* destino);
-    
-    // outros metdos 
-    bool cancelarReserva();
-    
-    bool calcularValorPassagem(Parada* origem, Parada* destino);
-    bool calcularValorPassagem();
-    
-    // getteres e setteres
-    Viagem* getViagem();
-    void setViagem(Viagem *viagem);
+    public:
+        // construtores
+        Reserva(Viagem *viagem, string cpf, Parada* origem, Parada* destino);
+        
+        // outros metdos 
+        bool cancelarReserva();
+        
+        // getteres e setteres
+        Viagem* getViagem();
 
-    string getCPF();
-    void setCPF(string cpf);
+        string getCPF();
 
-    double getValorPassagem();
-    void setValorPassagem(double valorPassagem);
+        double getValorPassagem();
 
-    Parada* getOrigem();
-    void setOrigem(Parada* origem);
+        Parada* getOrigem();
 
-    Parada* getDestino();
-    void setDestino(Parada* destino);
+        Parada* getDestino();
 
-    Data getData();
-    void setData(Data data);
+        Data getData();
+
+        bool estaAtiva();
 };

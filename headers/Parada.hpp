@@ -2,24 +2,29 @@
 
 using namespace std;
 
+
 class Parada {
-private:
-    int index;
-    string nome;
-    double distanciaPartida;
+    private:
+        int id;
+        string nome;
+        double distanciaPartida;
 
-public:
-    // construtores
-    Parada(int index, string nome, double distanciaPartida);
-    
-    // outros metodos
-    double calcularDistancia(Parada destino);
-    bool eApos(Parada destino); // verifica se o destino está após o objeto
+    public:
+        static int contadorId;
 
-    // getteres e setteres
-    string getNome();
-    void setNome(string nome);
+        // construtores
+        Parada(string nome, double distanciaPartida);
+        
+        // outros metodos
+        double calcularDistancia(Parada destino);
+        bool eApos(Parada destino); // verifica se o destino está após o objeto
 
-    double getDistanciaPartida();
-    void setDistanciaPartida(double distanciaPartida);
+        // getters e setters
+        int getId();
+
+        string getNome();
+        void setNome(string nome);
+
+        double getDistanciaPartida();
+        void setDistanciaPartida(double distanciaPartida);
 };

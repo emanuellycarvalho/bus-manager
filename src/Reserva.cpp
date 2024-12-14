@@ -1,63 +1,56 @@
-#include "Reserva.hpp"
-
-Reserva::Reserva(Viagem *viagem, string cpf)
-    : viagem(viagem), cpf(cpf), valorPassagem(0.0), origem(viagem->getOrigem()), destino(viagem->getDestino()) {}
+#include "../headers/Reserva.hpp"
+#include <iostream>
 
 Reserva::Reserva(Viagem *viagem, string cpf, Parada* origem, Parada* destino)
     : viagem(viagem), cpf(cpf), origem(origem), destino(destino) {
-    calcularValorPassagem();
+        if(viagem == nullptr) {
+            throw invalid_argument("Viagem não pode ser nula");
+        }
+        if(cpf.empty()) {
+            throw invalid_argument("CPF não pode ser vazio");
+        }
+        if(origem == nullptr) {
+            throw invalid_argument("Origem não pode ser nula");
+        }
+        if(destino == nullptr) {
+            throw invalid_argument("Destino não pode ser nulo");
+        }
+
+        this->valorPassagem = origem->calcularDistancia(*destino) * viagem->getOnibus()->getValorKm();
+        this->ativa = true;
+        this->viagem->ocuparAssento();
 }
 
 bool Reserva::cancelarReserva() {
-    // Implementar lógica de cancelamento com base no objeto
-    return true;
+    this->ativa = false;
+    this->viagem->desocuparAssento();
 }
 
-bool Reserva::calcularValorPassagem(Parada* origem, Parada* destino) {
-    valorPassagem = origem->calcularDistancia(*destino) * viagem->getOnibus()->getValorKm();
-    return true;
-}
-
-bool Reserva::calcularValorPassagem() {
-    return calcularValorPassagem(origem, destino);
-}
 
 Viagem* Reserva::getViagem() {
     return viagem;
-}
-
-void Reserva::setViagem(Viagem *viagem) {
-    this->viagem = viagem;
 }
 
 string Reserva::getCPF() {
     return cpf;
 }
 
-void Reserva::setCPF(string cpf) {
-    this->cpf = cpf;
-}
-
 double Reserva::getValorPassagem() {
     return valorPassagem;
-}
-
-void Reserva::setValorPassagem(double valorPassagem) {
-    this->valorPassagem = valorPassagem;
 }
 
 Parada* Reserva::getOrigem() {
     return origem;
 }
 
-void Reserva::setOrigem(Parada* origem) {
-    this->origem = origem;
-}
-
 Parada* Reserva::getDestino() {
     return destino;
 }
 
-void Reserva::setDestino(Parada* destino) {
-    this->destino = destino;
+Data Reserva::getData() {
+    return viagem->getData();
+}
+
+bool Reserva::estaAtiva() {
+    return ativa;
 }
