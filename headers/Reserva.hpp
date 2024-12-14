@@ -14,7 +14,7 @@ class Reserva {
         Reserva(Viagem *viagem, string cpf, Parada* origem, Parada* destino);
         
         // outros metdos 
-        bool cancelarReserva();
+        void cancelarReserva();
         
         // getteres e setteres
         Viagem* getViagem();

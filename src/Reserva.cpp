@@ -21,7 +21,7 @@ Reserva::Reserva(Viagem *viagem, string cpf, Parada* origem, Parada* destino)
         this->viagem->ocuparAssento();
 }
 
-bool Reserva::cancelarReserva() {
+void Reserva::cancelarReserva() {
     this->ativa = false;
     this->viagem->desocuparAssento();
 }
