@@ -24,46 +24,19 @@ public:
     void setAno(int ano);
 
     // sobrecarga de operadores
-    bool operator==(const Data &other) const {
-        return dia == other.dia && mes == other.mes && ano == other.ano;
-    }
+    bool operator==(const Data &other) const;
 
-    bool operator!=(const Data &other) const {
-        return !(*this == other);
-    }
+    bool operator!=(const Data &other) const;
 
-    bool operator<(const Data &other) const {
-        if (ano < other.ano) return true;
-        if (ano == other.ano && mes < other.mes) return true;
-        if (ano == other.ano && mes == other.mes && dia < other.dia) return true;
-        return false;
-    }
+    bool operator<(const Data &other) const;
 
-    bool operator<=(const Data &other) const {
-        return *this < other || *this == other;
-    }
+    bool operator<=(const Data &other) const;
 
-    bool operator>(const Data &other) const {
-        return !(*this <= other);
-    }
+    bool operator>(const Data &other) const;
 
-    bool operator>=(const Data &other) const {
-        return !(*this < other);
-    }
+    bool operator>=(const Data &other) const;
 
-    friend ostream &operator<<(ostream &out, const Data &data) {
-        out << (data.dia < 10 ? "0" : "") << data.dia << "/"
-            << (data.mes < 10 ? "0" : "") << data.mes << "/"
-            << data.ano;
-        return out;
-    }
+    friend ostream &operator<<(ostream &out, const Data &data) ;
 
-    friend istream &operator>>(istream &in, Data &data) {
-        char sep1, sep2;
-        in >> data.dia >> sep1 >> data.mes >> sep2 >> data.ano;
-        if (sep1 != '/' || sep2 != '/') {
-            in.setstate(ios::failbit);
-        }
-        return in;
-    }
+    friend istream &operator>>(istream &in, Data &data);
 };
