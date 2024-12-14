@@ -3,10 +3,10 @@ name: Run Tests
 on:
   push:
     branches:
-      - main  
+      - main  # Ou qualquer outra branch onde você quer rodar os testes
   pull_request:
     branches:
-      - main  
+      - main  # Ou qualquer outra branch onde você quer rodar os testes
 
 jobs:
   build:
@@ -19,12 +19,10 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake libgtest-dev libpthread-stubs0-dev
+          sudo apt-get install g++ build-essential libgtest-dev
 
       - name: Build and run tests
         run: |
-          mkdir -p build
-          cd build
-          cmake ..
           make
-          ./test_executavel 
+          ./build/test_executavel 
+
