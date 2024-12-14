@@ -1,12 +1,12 @@
-name: Run Tests
+name: Run Tests and Upload Coverage
 
 on:
   push:
     branches:
-      - main  # Ou qualquer outra branch onde você quer rodar os testes
+      - main
   pull_request:
     branches:
-      - main  # Ou qualquer outra branch onde você quer rodar os testes
+      - main
 
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install g++ build-essential libgtest-dev
+          sudo apt-get install g++ build-essential libgtest-dev gcovr
 
       - name: Build and run tests
         run: |
@@ -27,3 +27,7 @@ jobs:
           make
           ./build/test_executavel 
 
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
