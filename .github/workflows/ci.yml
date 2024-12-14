@@ -23,6 +23,7 @@ jobs:
 
       - name: Build and run tests
         run: |
+          mkdir -p build
           make
           ./build/test_executavel 
 
