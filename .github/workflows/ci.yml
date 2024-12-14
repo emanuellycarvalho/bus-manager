@@ -16,16 +16,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up C++ with GCC
-        uses: actions/setup-cpp@v1
-        with:
-          gcc: '10' 
-
-      - name: Install GoogleTest
+      - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgtest-dev cmake
-          sudo apt-get install -y build-essential
+          sudo apt-get install -y build-essential cmake libgtest-dev libpthread-stubs0-dev
 
       - name: Build and run tests
         run: |
