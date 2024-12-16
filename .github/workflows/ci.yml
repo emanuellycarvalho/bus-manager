@@ -21,11 +21,23 @@ jobs:
           sudo apt-get update
           sudo apt-get install g++ build-essential libgtest-dev gcovr
 
-      - name: Build and run tests
+      - name: Build and run tests with coverage
         run: |
           mkdir -p build
-          make
-          ./build/test_executavel 
+          g++ --coverage -o build/test_executavel test.cpp
+          ./build/test_executavel
+
+      - name: Generate code coverage report
+        run: |
+          gcovr -r . --xml-pretty -o coverage.xml
+
+      - name: Debug coverage file
+        run: |
+          ls -l coverage.xml
+          cat coverage.xml
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
+        with:
+          files: coverage.xml
+          fail_ci_if_error: true

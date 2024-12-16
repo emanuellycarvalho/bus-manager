@@ -1,4 +1,4 @@
-#include "../headers/Onibus.hpp"
+#include "../include/Onibus.hpp"
 #include <iostream>
 
 Onibus::Onibus(string placa, int numAssentos, double velocidadeMedia)

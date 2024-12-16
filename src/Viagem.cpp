@@ -1,4 +1,4 @@
-#include "../headers/Viagem.hpp"
+#include "../include/Viagem.hpp"
 #include <iostream>
 
 Viagem::Viagem(Parada* origem, Parada* destino, Onibus* onibus, Data data)

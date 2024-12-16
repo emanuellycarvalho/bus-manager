@@ -1,4 +1,4 @@
-#include "../headers/Reserva.hpp"
+#include "../include/Reserva.hpp"
 #include <iostream>
 
 Reserva::Reserva(Viagem *viagem, string cpf, Parada* origem, Parada* destino)

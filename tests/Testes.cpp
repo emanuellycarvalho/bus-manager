@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../headers/Reserva.hpp"
+#include "../include/Reserva.hpp"
 
 // Testes da classe Parada
 
