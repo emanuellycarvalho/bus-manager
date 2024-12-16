@@ -1,4 +1,4 @@
-name: Run Tests and Upload Coverage
+name: Run Tests
 
 on:
   push:
@@ -19,25 +19,11 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install g++ build-essential libgtest-dev gcovr
+          sudo apt-get install g++ build-essential libgtest-dev
 
-      - name: Build and run tests with coverage
+      - name: Build and run tests
         run: |
           mkdir -p build
-          g++ --coverage -o build/test_executavel tests/Testes.cpp
-          ./build/test_executavel
+          make
+          ./build/test_executavel 
 
-      - name: Generate code coverage report
-        run: |
-          gcovr -r . --xml-pretty -o coverage.xml
-
-      - name: Debug coverage file
-        run: |
-          ls -l coverage.xml
-          cat coverage.xml
-
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
-        with:
-          files: coverage.xml
-          fail_ci_if_error: true
