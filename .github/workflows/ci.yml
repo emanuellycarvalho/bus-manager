@@ -24,7 +24,7 @@ jobs:
       - name: Build and run tests with coverage
         run: |
           mkdir -p build
-          g++ --coverage -o build/test_executavel Testes.cpp
+          g++ --coverage -o build/test_executavel tests/Testes.cpp
           ./build/test_executavel
 
       - name: Generate code coverage report
