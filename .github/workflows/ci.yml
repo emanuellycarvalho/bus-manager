@@ -30,7 +30,7 @@ jobs:
         cmake ..
         make
 
-    - name: Run Tests
+    - name: Run Tests With CMake
       run: |
         ./build/TesteCoverage
 
@@ -38,7 +38,7 @@ jobs:
       run: |
         cd build
         ctest --output-on-failure
-        lcov --capture --directory . --output-file coverage.info --ignore-errors mismatch
+        lcov --capture --directory . --output-file coverage.info
         lcov --remove coverage.info '/usr/*' '*/test/*' --output-file coverage.info
         lcov --list coverage.info
 
