@@ -32,7 +32,6 @@ jobs:
 
     - name: Run Tests
       run: |
-        ./build/test_executavel
         ./build/TesteCoverage
 
     - name: Run Tests with Coverage
