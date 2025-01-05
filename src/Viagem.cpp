@@ -77,6 +77,9 @@ void Viagem::ocuparAssento() {
 }
 
 void Viagem::desocuparAssento() {
+    if(this->numAssentosLivres == this->onibus->getNumAssentos()){
+        throw invalid_argument("Não há assentos ocupados");
+    }
     this->numAssentosLivres = this->numAssentosLivres + 1;
 }
 
