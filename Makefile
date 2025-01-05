@@ -2,6 +2,10 @@
 CXX = g++
 CXXFLAGS = -std=c++14 -Wall -I./include -g
 LDFLAGS = -lgtest -lgtest_main -pthread
+
+CXXFLAGS += --coverage
+LDFLAGS += --coverage
+
 SRC_DIR = src
 BUILD_DIR = build
 TEST_DIR = tests
