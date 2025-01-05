@@ -38,7 +38,7 @@ jobs:
       run: |
         cd build
         ctest --output-on-failure
-        lcov --capture --directory . --output-file coverage.info --ignore-errors mismatch --ignore-errors unused
+        lcov --capture --directory . --output-file coverage.info --ignore-errors mismatch --ignore-errors unused --ignore-errors branches
         lcov --remove coverage.info '/usr/*' '*/test/*' --output-file coverage.info
         lcov --list coverage.info
 

@@ -22,7 +22,7 @@ set(SOURCES
 # Create the test executable (this doesn't require a main explicitly)
 add_executable(TesteCoverage ${SOURCES})
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -fprofile-arcs -ftest-coverage")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --coverage")
 
 # Link GTest and pthread
