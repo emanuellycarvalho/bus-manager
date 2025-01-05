@@ -1,28 +1,32 @@
 cmake_minimum_required(VERSION 3.10)
-project(TesteCoverage)
 
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+# Define the project
+project(BusManager)
 
+# Add Google Test (assuming it's already installed)
 find_package(GTest REQUIRED)
+
+# Include directories
 include_directories(${GTEST_INCLUDE_DIRS})
 
-set(SOURCES
+# Add the source files
+set(SOURCES 
     src/Data.cpp
     src/Onibus.cpp
     src/Parada.cpp
     src/Reserva.cpp
     src/Viagem.cpp
-)
-
-set(TEST_SOURCES
     tests/Testes.cpp
 )
 
-add_executable(TesteCoverage ${SOURCES} ${TEST_SOURCES})
+# Create the test executable (this doesn't require a main explicitly)
+add_executable(TesteCoverage ${SOURCES})
 
+# Link GTest and pthread
 target_link_libraries(TesteCoverage ${GTEST_LIBRARIES} pthread)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
-
+# Enable testing
 enable_testing()
+
+# Add the test
 add_test(NAME TesteCoverage COMMAND TesteCoverage)
