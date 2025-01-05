@@ -13,32 +13,33 @@ jobs:
     runs-on: ubuntu-latest  
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install g++ build-essential libgtest-dev gcovr
-
-      - name: Build and run tests
-        run: |
-          mkdir -p build
-          make
-          ./build/test_executavel 
-        
-      - name: Run Tests with Coverage
+    - name: Install dependencies
       run: |
-        cd ./build
-        ctest --output-on-failure
-        lcov --capture --directory . --output-file coverage.info
-        lcov --remove coverage.info '/usr/*' '*/test/*' --output-file coverage.info
-        lcov --list coverage.info
+        sudo apt-get update
+        sudo apt-get install g++ build-essential libgtest-dev gcovr
+        sudo apt-get install -y lcov
 
-    - name: Upload Coverage to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        files: ./build/coverage.info
-        flags: unittests
-        name: codecov-report
-        fail_ci_if_error: true
+    - name: Build and run tests
+      run: |
+        mkdir -p build
+        make
+        ./build/test_executavel 
+      
+    - name: Run Tests with Coverage
+    run: |
+      cd ./build
+      ctest --output-on-failure
+      lcov --capture --directory . --output-file coverage.info
+      lcov --remove coverage.info '/usr/*' '*/test/*' --output-file coverage.info
+      lcov --list coverage.info
+
+  - name: Upload Coverage to Codecov
+    uses: codecov/codecov-action@v3
+    with:
+      files: ./build/coverage.info
+      flags: unittests
+      name: codecov-report
+      fail_ci_if_error: true
