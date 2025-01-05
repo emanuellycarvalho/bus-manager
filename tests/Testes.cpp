@@ -203,17 +203,6 @@ TEST(ViagemTest, OcuparAssentoComAssentosDisponiveis) {
     ASSERT_EQ(viagem.getNumAssentosLivres(), 39);
 }
 
-TEST(ViagemTest, OcuparAssentoSemAssentosDisponiveis) {
-    Onibus onibus("XYZ9876", 1, 60.0, 10.0);
-    Parada origem("Origem", 0.0);
-    Parada destino("Destino", 400.0);
-    Data data(1, 1, 2024);
-
-    Viagem viagem(&origem, &destino, &onibus, data);
-    viagem.ocuparAssento();
-    ASSERT_THROW(viagem.ocuparAssento(), overflow_error);
-}
-
 TEST(ViagemTest, desocuparAssentoComAssentoOcupado) {
     Onibus onibus("XYZ9876", 40, 60.0, 10.0);
     Parada origem("Origem", 0.0);
@@ -224,6 +213,17 @@ TEST(ViagemTest, desocuparAssentoComAssentoOcupado) {
     viagem.ocuparAssento();
     viagem.desocuparAssento();
     ASSERT_EQ(viagem.getNumAssentosLivres(), 40);
+}
+
+TEST(ViagemTest, OcuparAssentoSemAssentosDisponiveis) {
+    Onibus onibus("XYZ9876", 1, 60.0, 10.0);
+    Parada origem("Origem", 0.0);
+    Parada destino("Destino", 400.0);
+    Data data(1, 1, 2024);
+
+    Viagem viagem(&origem, &destino, &onibus, data);
+    viagem.ocuparAssento();
+    ASSERT_THROW(viagem.ocuparAssento(), invalid_argument);
 }
 
 TEST(ViagemTest, desocuparAssentoSemAssentoOcupado) {
