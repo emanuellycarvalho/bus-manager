@@ -19,27 +19,26 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install g++ build-essential libgtest-dev gcovr
-        sudo apt-get install -y lcov
+        sudo apt-get install -y g++ build-essential libgtest-dev gcovr lcov
 
     - name: Build and run tests
       run: |
         mkdir -p build
         make
-        ./build/test_executavel 
+        ./build/test_executavel
       
     - name: Run Tests with Coverage
-    run: |
-      cd ./build
-      ctest --output-on-failure
-      lcov --capture --directory . --output-file coverage.info
-      lcov --remove coverage.info '/usr/*' '*/test/*' --output-file coverage.info
-      lcov --list coverage.info
+      run: |
+        cd ./build
+        ctest --output-on-failure
+        lcov --capture --directory . --output-file coverage.info
+        lcov --remove coverage.info '/usr/*' '*/test/*' --output-file coverage.info
+        lcov --list coverage.info
 
-  - name: Upload Coverage to Codecov
-    uses: codecov/codecov-action@v3
-    with:
-      files: ./build/coverage.info
-      flags: unittests
-      name: codecov-report
-      fail_ci_if_error: true
+    - name: Upload Coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        files: ./build/coverage.info
+        flags: unittests
+        name: codecov-report
+        fail_ci_if_error: true
