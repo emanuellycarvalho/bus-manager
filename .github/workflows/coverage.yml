@@ -21,10 +21,9 @@ jobs:
 
     - name: Build Project
       run: |
-        mkdir build
-        cd build
-        cmake ..
+        mkdir -p build
         make
+        ./build/test_executavel
 
     - name: Run Tests with Coverage
       run: |
