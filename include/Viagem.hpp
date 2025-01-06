@@ -12,6 +12,7 @@ class Viagem {
 
     public:
         // construtores
+        Viagem(Data data);
         Viagem(Parada *origem, Parada *destino, Onibus *onibus, Data data);
 
         // outros metodos

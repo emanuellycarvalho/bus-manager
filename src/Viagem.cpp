@@ -1,6 +1,13 @@
 #include "../include/Viagem.hpp"
 #include <iostream>
 
+
+Viagem::Viagem(Data data) : data(data){
+    origem = nullptr;
+    destino = nullptr;
+    onibus = nullptr;
+}
+
 Viagem::Viagem(Parada* origem, Parada* destino, Onibus* onibus, Data data)
     : origem(origem), destino(destino), onibus(onibus), data(data) {
         if(origem == nullptr) {
