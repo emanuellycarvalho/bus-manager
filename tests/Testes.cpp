@@ -197,6 +197,18 @@ TEST(OnibusTest, InicializarOnibusComAtributosCorretosComValorKm) {
     ASSERT_DOUBLE_EQ(onibus.getValorKm(), 10.0);
 }
 
+TEST(OnibusTest, InicializarOnibusComPlacaIncorretaComValorKm) {
+    ASSERT_THROW(Onibus onibus("", 40, 60.0, 10.0), invalid_argument);
+}
+
+TEST(OnibusTest, InicializarOnibusComNumAssentosIncorretoComValorKm) {
+    ASSERT_THROW(Onibus onibus("XYZ9876", 0, 60.0, 10.0), invalid_argument);
+}
+
+TEST(OnibusTest, InicializarOnibusComVelocidadeMediaIncorretaComValorKm) {
+    ASSERT_THROW(Onibus onibus("XYZ9876", 40, 60.0, 10.0), invalid_argument);
+}
+
 TEST(OnibusTest, MudaPlacaDeOnibusComSetters) {
     Onibus onibus("XYZ9876", 40, 60.0, 10.0);
     ASSERT_EQ(onibus.getPlaca(), "XYZ9876");
@@ -293,10 +305,8 @@ TEST(ViagemTest, InicializarViagemComAtributosCorretos) {
     Parada destino("Destino", 400.0);
     Data data(1, 1, 2024);
 
-    Viagem viagem(data);
-    viagem.setOrigem(&origem);
-    viagem.setOnibus(&onibus);
-    viagem.setDestino(&destino);
+    Viagem viagem(&origem, &destino, &onibus, data);
+
     ASSERT_EQ(viagem.getOrigem()->getNome(), "Origem");
     ASSERT_EQ(viagem.getDestino()->getNome(), "Destino");
     ASSERT_EQ(viagem.getOnibus()->getPlaca(), "XYZ9876");
@@ -327,6 +337,39 @@ TEST(ViagemTest, InicializarViagemComOnibusNulo) {
     Data data(1, 1, 2024);
 
     ASSERT_THROW(Viagem viagem(&origem, &destino, nullptr, data), invalid_argument);
+}
+
+TEST(ViagemTest, AlterarViagemComOrigemNulaComSetter) {
+    Onibus onibus("XYZ9876", 40, 60.0, 10.0);
+    Parada origem("Origem", 0.0);
+    Parada destino("Destino", 400.0);
+    Data data(1, 1, 2024);
+
+    Viagem viagem(&origem, &destino, &onibus, data);
+
+    ASSERT_THROW(viagem.setOrigem(nullptr), invalid_argument);
+}
+
+TEST(ViagemTest, AlterarViagemComDestinoNuloComSetter) {
+    Onibus onibus("XYZ9876", 40, 60.0, 10.0);
+    Parada origem("Origem", 0.0);
+    Parada destino("Destino", 400.0);
+    Data data(1, 1, 2024);
+
+    Viagem viagem(&origem, &destino, &onibus, data);
+
+    ASSERT_THROW(viagem.setDestino(nullptr), invalid_argument);
+}
+
+TEST(ViagemTest, AlterarViagemComOnibusNuloComSetter) {
+    Onibus onibus("XYZ9876", 40, 60.0, 10.0);
+    Parada origem("Origem", 0.0);
+    Parada destino("Destino", 400.0);
+    Data data(1, 1, 2024);
+
+    Viagem viagem(&origem, &destino, &onibus, data);
+
+    ASSERT_THROW(viagem.setOnibus(nullptr), invalid_argument);
 }
 
 TEST(ViagemTest, MudarDataDaViagemComSetter) {
