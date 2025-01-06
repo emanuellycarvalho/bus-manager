@@ -335,7 +335,7 @@ TEST(ViagemTest, MudarDataDaViagemComSetter) {
     ASSERT_EQ(viagem.getData(), data);
 
     Data data2(20, 02, 2025);
-    Viagem viagem(data2);
+    viagem.setData(data2);
     ASSERT_EQ(viagem.getData(), data2);
 }
 
