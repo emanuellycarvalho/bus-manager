@@ -206,7 +206,7 @@ TEST(OnibusTest, InicializarOnibusComNumAssentosIncorretoComValorKm) {
 }
 
 TEST(OnibusTest, InicializarOnibusComVelocidadeMediaIncorretaComValorKm) {
-    ASSERT_THROW(Onibus onibus("XYZ9876", 40, 60.0, 10.0), invalid_argument);
+    ASSERT_THROW(Onibus onibus("XYZ9876", 40, 0.0, 10.0), invalid_argument);
 }
 
 TEST(OnibusTest, MudaPlacaDeOnibusComSetters) {
