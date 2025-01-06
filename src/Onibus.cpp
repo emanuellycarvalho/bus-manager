@@ -1,7 +1,8 @@
 #include "../include/Onibus.hpp"
 #include <iostream>
 
-Onibus::Onibus(string placa, int numAssentos, double velocidadeMedia){
+Onibus::Onibus(string placa, int numAssentos, double velocidadeMedia)
+    : placa(placa), numAssentos(numAssentos), velocidadeMedia(velocidadeMedia), valorKm(5.0) {
         if(placa.empty()) {
             throw invalid_argument("Placa não pode ser vazia");
         }
@@ -13,7 +14,8 @@ Onibus::Onibus(string placa, int numAssentos, double velocidadeMedia){
         }
     }
 
-Onibus::Onibus(string placa, int numAssentos, double velocidadeMedia, double valorKm){
+Onibus::Onibus(string placa, int numAssentos, double velocidadeMedia, double valorKm)
+    : placa(placa), numAssentos(numAssentos), velocidadeMedia(velocidadeMedia), valorKm(valorKm) {
         if(placa.empty()) {
             throw invalid_argument("Placa não pode ser vazia");
         }
