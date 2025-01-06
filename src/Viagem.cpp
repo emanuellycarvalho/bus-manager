@@ -70,6 +70,7 @@ void Viagem::setOnibus(Onibus* onibus) {
         throw invalid_argument("Onibus não pode ser nulo");
     }
     this->onibus = onibus;
+    this->numAssentosLivres = onibus->getNumAssentos();
 }
 
 int Viagem::getNumAssentosLivres() {
@@ -80,14 +81,14 @@ void Viagem::ocuparAssento() {
     if(this->numAssentosLivres == 0) {
         throw invalid_argument("Não há assentos livres");
     }
-    this->numAssentosLivres = this->numAssentosLivres - 1;
+    this->numAssentosLivres--;
 }
 
 void Viagem::desocuparAssento() {
     if(this->numAssentosLivres == this->onibus->getNumAssentos()){
         throw invalid_argument("Não há assentos ocupados");
     }
-    this->numAssentosLivres = this->numAssentosLivres + 1;
+    this->numAssentosLivres++;
 }
 
 Data Viagem::getData() {
