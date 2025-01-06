@@ -56,6 +56,15 @@ TEST(DataTest, OperadoresDeIgualdade) {
     EXPECT_FALSE(data1 == data2);
 }
 
+TEST(DataTest, OperadoresDeDiferenca) {
+    Data data1(10, 12, 2023);
+    Data data2(11, 12, 2023);
+    Data data3(10, 12, 2023);
+
+    EXPECT_FALSE(data1 != data3);
+    EXPECT_TRUE(data1 != data2);
+}
+
 TEST(DataTest, OperadoresDeMenorOuIgualQue) {
     Data data1(10, 12, 2023);
     Data data2(11, 12, 2023);
@@ -320,6 +329,16 @@ TEST(ViagemTest, InicializarViagemComOnibusNulo) {
     ASSERT_THROW(Viagem viagem(&origem, &destino, nullptr, data), invalid_argument);
 }
 
+TEST(ViagemTest, MudarDataDaViagemComSetter) {
+    Data data(1, 1, 2024);
+    Viagem viagem(data);
+    ASSERT_EQ(viagem.getData(), data);
+
+    Data data2(20, 02, 2025);
+    Viagem viagem(data2);
+    ASSERT_EQ(viagem.getData(), data2);
+}
+
 TEST(ViagemTest, VerificarDisponibilidadeDeAssentos) {
     Onibus* onibus = new Onibus("XYZ9876", 40, 60.0, 10.0);
     Parada* origem = new Parada("Origem", 0.0);
@@ -439,8 +458,8 @@ TEST(ReservaTest, InicializarReservaComAtributosCorretos) {
     viagem.setDestino(destino);
 
     Reserva reserva(&viagem, "12345678901", origem, destino);
-    ASSERT_EQ(reserva.getViagem()->getOrigem()->getNome(), "Origem");
-    ASSERT_EQ(reserva.getViagem()->getDestino()->getNome(), "Destino");
+    ASSERT_EQ(reserva.getOrigem()->getNome(), "Origem");
+    ASSERT_EQ(reserva.getDestino()->getNome(), "Destino");
     ASSERT_EQ(reserva.getViagem()->getOrigem()->getNome(), "Origem");
     ASSERT_EQ(reserva.getViagem()->getDestino()->getNome(), "Destino");
     ASSERT_EQ(reserva.getViagem()->getOnibus()->getPlaca(), "XYZ9876");
