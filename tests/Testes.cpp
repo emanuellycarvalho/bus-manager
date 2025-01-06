@@ -391,9 +391,8 @@ TEST(ViagemTest, OcuparAssentoSemAssentosDisponiveis) {
     viagem.setOrigem(origem);
     viagem.setOnibus(onibus);
     viagem.setDestino(destino);
-    
+
     viagem.setNumAssentosLivres(0);
-    viagem.ocuparAssento();
     ASSERT_THROW(viagem.ocuparAssento(), invalid_argument);
 }
 
