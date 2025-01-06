@@ -73,6 +73,10 @@ void Viagem::setOnibus(Onibus* onibus) {
     this->numAssentosLivres = onibus->getNumAssentos();
 }
 
+void Viagem::setNumAssentosLivres(int numAssentosLivres) {
+    this->numAssentosLivres = numAssentosLivres;
+}
+
 int Viagem::getNumAssentosLivres() {
     return numAssentosLivres;
 }

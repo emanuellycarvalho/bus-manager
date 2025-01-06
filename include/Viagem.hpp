@@ -33,6 +33,7 @@ class Viagem {
         void setDestino(Parada *destino);
 
         int getNumAssentosLivres();
+        void setNumAssentosLivres(int numAssentosLivres);
 
         Onibus* getOnibus();
         void setOnibus(Onibus *onibus);

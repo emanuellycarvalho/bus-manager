@@ -391,6 +391,8 @@ TEST(ViagemTest, OcuparAssentoSemAssentosDisponiveis) {
     viagem.setOrigem(origem);
     viagem.setOnibus(onibus);
     viagem.setDestino(destino);
+    
+    viagem.setNumAssentosLivres(0);
     viagem.ocuparAssento();
     ASSERT_THROW(viagem.ocuparAssento(), invalid_argument);
 }
@@ -437,7 +439,7 @@ TEST(ReservaTest, InicializarReservaComCPFNulo) {
     viagem.setOrigem(origem);
     viagem.setOnibus(onibus);
     viagem.setDestino(destino);
-    
+
     ASSERT_THROW(Reserva reserva(&viagem, "", origem, destino), invalid_argument);
 }
 
