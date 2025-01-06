@@ -439,8 +439,8 @@ TEST(ReservaTest, InicializarReservaComAtributosCorretos) {
     viagem.setDestino(destino);
 
     Reserva reserva(&viagem, "12345678901", origem, destino);
-    ASSERT_EQ(reserva.getViagem()->getOrigem(), "Origem");
-    ASSERT_EQ(reserva.getViagem()->getDestino(), "Destino");
+    ASSERT_EQ(reserva.getViagem()->getOrigem()->getNome(), "Origem");
+    ASSERT_EQ(reserva.getViagem()->getDestino()->getNome(), "Destino");
     ASSERT_EQ(reserva.getViagem()->getOrigem()->getNome(), "Origem");
     ASSERT_EQ(reserva.getViagem()->getDestino()->getNome(), "Destino");
     ASSERT_EQ(reserva.getViagem()->getOnibus()->getPlaca(), "XYZ9876");
