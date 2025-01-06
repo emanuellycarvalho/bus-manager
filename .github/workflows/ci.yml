@@ -36,7 +36,7 @@ jobs:
         ctest --output-on-failure
         lcov --capture --directory . --output-file coverage.info --ignore-errors mismatch,mismatch --ignore-errors unused --ignore-errors branches
         lcov --remove coverage.info '/usr/*' '*/test/*' --output-file coverage.info --ignore-errors mismatch,mismatch --ignore-errors unused
-        lcov --list coverage.info
+        echo "Coverage report avaliable in 'https://app.codecov.io/gh/emanuellycarvalho/bus-manager/tree/main'"
 
     - name: Upload Coverage to Codecov
       uses: codecov/codecov-action@v3
