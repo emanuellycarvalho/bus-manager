@@ -8,8 +8,7 @@ Viagem::Viagem(Data data) : data(data){
     onibus = nullptr;
 }
 
-Viagem::Viagem(Parada* origem, Parada* destino, Onibus* onibus, Data data)
-    : origem(origem), destino(destino), onibus(onibus), data(data) {
+Viagem::Viagem(Parada* origem, Parada* destino, Onibus* onibus, Data data){
         if(origem == nullptr) {
             throw invalid_argument("Origem não pode ser nula");
         }
@@ -19,6 +18,11 @@ Viagem::Viagem(Parada* origem, Parada* destino, Onibus* onibus, Data data)
         if(onibus == nullptr) {
             throw invalid_argument("Onibus não pode ser nulo");
         }
+
+        this->origem = origem;
+        this->destino = destino;
+        this->onibus = onibus;
+        this->data = data;
         this->numAssentosLivres = onibus->getNumAssentos();
 }
 

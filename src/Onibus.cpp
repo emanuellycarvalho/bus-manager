@@ -1,8 +1,7 @@
 #include "../include/Onibus.hpp"
 #include <iostream>
 
-Onibus::Onibus(string placa, int numAssentos, double velocidadeMedia)
-    : placa(placa), numAssentos(numAssentos), velocidadeMedia(velocidadeMedia), valorKm(5.0) {
+Onibus::Onibus(string placa, int numAssentos, double velocidadeMedia){    
         if(placa.empty()) {
             throw invalid_argument("Placa não pode ser vazia");
         }
@@ -12,10 +11,14 @@ Onibus::Onibus(string placa, int numAssentos, double velocidadeMedia)
         if(velocidadeMedia <= 0) {
             throw invalid_argument("Velocidade média precisa ser maior que zero");
         }
+
+        this->placa = placa;
+        this->numAssentos = numAssentos;
+        this->velocidadeMedia = velocidadeMedia;
+        this->valorKm = 5.0;
     }
 
-Onibus::Onibus(string placa, int numAssentos, double velocidadeMedia, double valorKm)
-    : placa(placa), numAssentos(numAssentos), velocidadeMedia(velocidadeMedia), valorKm(valorKm) {
+Onibus::Onibus(string placa, int numAssentos, double velocidadeMedia, double valorKm){    
         if(placa.empty()) {
             throw invalid_argument("Placa não pode ser vazia");
         }
@@ -28,6 +31,11 @@ Onibus::Onibus(string placa, int numAssentos, double velocidadeMedia, double val
         if(valorKm <= 0) {
             throw invalid_argument("Valor por km precisa ser maior que zero");
         }
+
+        this->placa = placa;
+        this->numAssentos = numAssentos;
+        this->velocidadeMedia = velocidadeMedia;
+        this->valorKm = valorKm;
     }
 
 string Onibus::getPlaca() {

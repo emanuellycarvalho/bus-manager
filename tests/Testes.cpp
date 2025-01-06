@@ -220,6 +220,34 @@ TEST(OnibusTest, MudaValorKmDeOnibusComSetters) {
     ASSERT_DOUBLE_EQ(onibus.getValorKm(), 5.0);
 }
 
+TEST(OnibusTest, MudaPlacaDeOnibusInvalidaComSetters) {
+    Onibus onibus("XYZ9876", 40, 60.0, 10.0);
+    ASSERT_EQ(onibus.getPlaca(), "XYZ9876");
+
+    ASSERT_THROW(onibus.setPlaca(""), invalid_argument);
+}
+
+TEST(OnibusTest, MudaNumAssentosDeOnibusInvalidoComSetters) {
+    Onibus onibus("XYZ9876", 40, 60.0, 10.0);
+    ASSERT_EQ(onibus.getNumAssentos(), 40);
+    
+    ASSERT_THROW(onibus.setNumAssentos(0), invalid_argument);
+}
+
+TEST(OnibusTest, MudaVelocidadeMediaDeOnibusInvalidaComSetters) {
+    Onibus onibus("XYZ9876", 40, 60.0, 10.0);
+    ASSERT_DOUBLE_EQ(onibus.getVelocidadeMedia(), 60.0);
+    
+    ASSERT_THROW(onibus.setVelocidadeMedia(0), invalid_argument);
+}
+
+TEST(OnibusTest, MudaValorKmDeOnibusInvalidoComSetters) {
+    Onibus onibus("XYZ9876", 40, 60.0, 10.0);
+    ASSERT_DOUBLE_EQ(onibus.getValorKm(), 10.0);
+    
+    ASSERT_THROW(onibus.setValorKm(0), invalid_argument);
+}
+
 TEST(OnibusTest, InicializarOnibusComPlacaVazia) {
     ASSERT_THROW(Onibus onibus("", 40, 60.0), invalid_argument);
 }
@@ -411,12 +439,14 @@ TEST(ReservaTest, InicializarReservaComAtributosCorretos) {
     viagem.setDestino(destino);
 
     Reserva reserva(&viagem, "12345678901", origem, destino);
+    ASSERT_EQ(reserva.getViagem()->getOrigem(), "Origem");
+    ASSERT_EQ(reserva.getViagem()->getDestino(), "Destino");
     ASSERT_EQ(reserva.getViagem()->getOrigem()->getNome(), "Origem");
     ASSERT_EQ(reserva.getViagem()->getDestino()->getNome(), "Destino");
     ASSERT_EQ(reserva.getViagem()->getOnibus()->getPlaca(), "XYZ9876");
-    ASSERT_EQ(reserva.getViagem()->getData().getAno(), 2024);
-    ASSERT_EQ(reserva.getViagem()->getData().getMes(), 1);
-    ASSERT_EQ(reserva.getViagem()->getData().getDia(), 1);
+    ASSERT_EQ(reserva.getData().getAno(), 2024);
+    ASSERT_EQ(reserva.getData().getMes(), 1);
+    ASSERT_EQ(reserva.getData().getDia(), 1);
     ASSERT_EQ(reserva.getCPF(), "12345678901");
     ASSERT_DOUBLE_EQ(reserva.getValorPassagem(), 400.0 * 10.0);
 }
