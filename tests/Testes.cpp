@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
-#include "../include/Reserva.hpp"
-#include "../include/Database.hpp"
-#include "../include/OnibusService.hpp"
+#include "Reserva.hpp"
+#include "Database.hpp"
+#include "OnibusService.hpp"
 #include <iostream>
 
 // Testes da classe Data
@@ -598,7 +598,7 @@ TEST(ViagemTest, CancelarAssentoSemAssentoOcupado) {
 
 /* TESTES DE INTEGRAÇÃO */
 
-TEST(OnibusTeste, AdicionarERecuperarOnibus) {
+TEST(OnibusTeste, AdicionarERecuperarOnibusComSucesso) {
     Database db(":memory:");
     db.initializeTables();
 
@@ -617,6 +617,58 @@ TEST(OnibusTeste, AdicionarERecuperarOnibus) {
 
     delete onibus;
 }
+
+TEST(OnibusTeste, BuscarOnibusPorIdInvalido) {
+    Database db(":memory:");
+    db.initializeTables();
+
+    OnibusService onibusService(db);
+
+    Onibus* onibus = onibusService.buscarOnibusPorId(999); 
+
+    ASSERT_TRUE(onibus == nullptr);
+
+    delete onibus;
+}
+
+
+TEST(OnibusTeste, AdicionarEDeletarOnibusComSucesso) {
+    Database db(":memory:");
+    db.initializeTables();
+
+    OnibusService onibusService(db);
+
+    int id = onibusService.adicionarOnibus(Onibus("ABC1234", 50, 60.0, 2.5));
+
+    Onibus* onibus = onibusService.buscarOnibusPorId(id);
+
+    ASSERT_TRUE(onibus != nullptr);
+
+    onibusService.deletarOnibus(id);
+    onibus = onibusService.buscarOnibusPorId(id);
+
+    ASSERT_TRUE(onibus == nullptr);
+
+    delete onibus;
+}
+
+TEST(OnibusTeste, ListarTodosOnibusComSucesso) {
+    Database db(":memory:");
+    db.initializeTables();
+
+    OnibusService onibusService(db);
+
+    onibusService.adicionarOnibus(Onibus("ABC1234", 50, 60.0, 2.5));
+    onibusService.adicionarOnibus(Onibus("XYZ9876", 60, 70.0, 3.0));
+
+    std::vector<Onibus> onibusList = onibusService.listarTodosOnibus();
+
+    ASSERT_EQ(onibusList.size(), 2);
+
+    ASSERT_EQ(onibusList[0].getPlaca(), "ABC1234");
+    ASSERT_EQ(onibusList[1].getPlaca(), "XYZ9876");
+}
+
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
