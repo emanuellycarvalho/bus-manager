@@ -1,5 +1,8 @@
 #include <gtest/gtest.h>
 #include "../include/Reserva.hpp"
+#include "../include/Database.hpp"
+#include "../include/OnibusService.hpp"
+#include <iostream>
 
 // Testes da classe Data
 
@@ -591,6 +594,28 @@ TEST(ViagemTest, CancelarAssentoSemAssentoOcupado) {
     viagem.setOnibus(&onibus);
     viagem.setDestino(&destino);
     ASSERT_THROW(viagem.desocuparAssento(), invalid_argument);
+}
+
+/* TESTES DE INTEGRAÇÃO */
+
+TEST(OnibusTeste, AdicionarERecuperarOnibus) {
+    Database db(":memory:");
+    db.initializeTables();
+
+    OnibusService onibusService(db);
+
+    int id = onibusService.adicionarOnibus(Onibus("ABC1234", 50, 60.0, 2.5));
+
+    Onibus* onibus = onibusService.buscarOnibusPorId(id);
+
+    ASSERT_TRUE(onibus != nullptr);
+    ASSERT_EQ(onibus->getId(), id);
+    ASSERT_EQ(onibus->getNumAssentos(), 50);
+    ASSERT_DOUBLE_EQ(onibus->getVelocidadeMedia(), 60.0);
+    ASSERT_DOUBLE_EQ(onibus->getValorKm(), 2.5);
+    ASSERT_EQ(onibus->getPlaca(), "ABC1234");
+
+    delete onibus;
 }
 
 int main(int argc, char **argv) {
