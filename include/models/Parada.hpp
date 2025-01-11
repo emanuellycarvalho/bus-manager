@@ -1,7 +1,7 @@
 #include <string>
 
 using namespace std;
-
+#pragma once
 
 class Parada {
     private:
@@ -16,15 +16,16 @@ class Parada {
         Parada(string nome, double distanciaPartida);
         
         // outros metodos
-        double calcularDistancia(Parada destino);
-        bool eApos(Parada destino); // verifica se o destino está após o objeto
+        double calcularDistancia(Parada destino) const;
+        bool eApos(Parada destino) const; // verifica se o destino está após o objeto
 
         // getters e setters
-        int getId();
+        int getId() const;
+        void setId(int id);
 
-        string getNome();
+        string getNome() const;
         void setNome(string nome);
 
-        double getDistanciaPartida();
+        double getDistanciaPartida() const;
         void setDistanciaPartida(double distanciaPartida);
 };

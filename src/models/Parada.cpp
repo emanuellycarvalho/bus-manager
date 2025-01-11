@@ -14,7 +14,7 @@ Parada::Parada(string nome, double distanciaPartida)
         }
 }
 
-double Parada::calcularDistancia(Parada destino) {
+double Parada::calcularDistancia(Parada destino) const {
     if (distanciaPartida == destino.getDistanciaPartida()) {
         throw invalid_argument("Paradas estão no mesmo ponto");
     }
@@ -22,15 +22,19 @@ double Parada::calcularDistancia(Parada destino) {
     return abs(destino.getDistanciaPartida() - distanciaPartida);
 }
 
-int Parada::getId() {
+int Parada::getId() const {
     return id;
 }
 
-bool Parada::eApos(Parada destino) {
+void Parada::setId(int id) {
+    this->id = id;
+}
+
+bool Parada::eApos(Parada destino) const {
     return distanciaPartida < destino.getDistanciaPartida();
 }
 
-string Parada::getNome() {
+string Parada::getNome() const {
     return nome;
 }
 
@@ -41,7 +45,7 @@ void Parada::setNome(string nome) {
     this->nome = nome;
 }
 
-double Parada::getDistanciaPartida() {
+double Parada::getDistanciaPartida() const {
     return distanciaPartida;
 }
 

@@ -4,15 +4,27 @@
 #include "OnibusService.hpp"
 #include <iostream>
 
-TEST(OnibusTeste, AdicionarERecuperarOnibusComSucesso) {
-    Database db(":memory:");
-    db.initializeTables();
+class OnibusServiceTeste : public ::testing::Test {
+protected:
+    Database* db;
+    OnibusService* onibusService;
 
-    OnibusService onibusService(db);
+    void SetUp() override {
+        db = new Database(":memory:"); 
+        db->initializeTables();
+        onibusService = new OnibusService(*db);
+    }
 
-    int id = onibusService.adicionarOnibus(Onibus("ABC1234", 50, 60.0, 2.5));
+    void TearDown() override {
+        delete onibusService;
+        delete db; 
+    }
+};
 
-    Onibus* onibus = onibusService.buscarOnibusPorId(id);
+TEST_F(OnibusServiceTeste, AdicionarOnibus_QuandoAdicionaOnibus_EntaoRetornaOnibusComSucesso) {
+    int id = onibusService->adicionarOnibus(Onibus("ABC1234", 50, 60.0, 2.5));
+
+    Onibus* onibus = onibusService->buscarOnibusPorId(id);
 
     ASSERT_TRUE(onibus != nullptr);
     ASSERT_EQ(onibus->getId(), id);
@@ -24,53 +36,45 @@ TEST(OnibusTeste, AdicionarERecuperarOnibusComSucesso) {
     delete onibus;
 }
 
-TEST(OnibusTeste, BuscarOnibusPorIdInvalido) {
-    Database db(":memory:");
-    db.initializeTables();
-
-    OnibusService onibusService(db);
-
-    Onibus* onibus = onibusService.buscarOnibusPorId(999); 
+TEST_F(OnibusServiceTeste, BuscarOnibusPorId_QuandoIdInvalido_EntaoRetornaNulo) {
+    Onibus* onibus = onibusService->buscarOnibusPorId(999);
 
     ASSERT_TRUE(onibus == nullptr);
 
     delete onibus;
 }
 
+TEST_F(OnibusServiceTeste, DeletarOnibus_QuandoDeletaOnibus_EntaoOnibusNaoERecuperado) {
+    int id = onibusService->adicionarOnibus(Onibus("ABC1234", 50, 60.0, 2.5));
 
-TEST(OnibusTeste, AdicionarEDeletarOnibusComSucesso) {
-    Database db(":memory:");
-    db.initializeTables();
-
-    OnibusService onibusService(db);
-
-    int id = onibusService.adicionarOnibus(Onibus("ABC1234", 50, 60.0, 2.5));
-
-    Onibus* onibus = onibusService.buscarOnibusPorId(id);
+    Onibus* onibus = onibusService->buscarOnibusPorId(id);
 
     ASSERT_TRUE(onibus != nullptr);
 
-    onibusService.deletarOnibus(id);
-    onibus = onibusService.buscarOnibusPorId(id);
+    onibusService->deletarOnibus(id);
+    onibus = onibusService->buscarOnibusPorId(id);
 
     ASSERT_TRUE(onibus == nullptr);
 
     delete onibus;
 }
 
-TEST(OnibusTeste, ListarTodosOnibusComSucesso) {
-    Database db(":memory:");
-    db.initializeTables();
+TEST_F(OnibusServiceTeste, ListarOnibus_QuandoOnibusCadastrados_EntaoRetornaListaDeOnibus) {
+    onibusService->adicionarOnibus(Onibus("ABC1234", 50, 60.0, 2.5));
+    onibusService->adicionarOnibus(Onibus("XYZ9876", 60, 70.0, 3.0));
 
-    OnibusService onibusService(db);
-
-    onibusService.adicionarOnibus(Onibus("ABC1234", 50, 60.0, 2.5));
-    onibusService.adicionarOnibus(Onibus("XYZ9876", 60, 70.0, 3.0));
-
-    std::vector<Onibus> onibusList = onibusService.listarTodosOnibus();
+    std::vector<Onibus> onibusList = onibusService->listarTodosOnibus();
 
     ASSERT_EQ(onibusList.size(), 2);
 
     ASSERT_EQ(onibusList[0].getPlaca(), "ABC1234");
     ASSERT_EQ(onibusList[1].getPlaca(), "XYZ9876");
+}
+
+TEST_F(OnibusServiceTeste, ListarOnibus_QuandoFalhaNoBanco_EntaoLancaExcecao) {
+    db->execute("DROP TABLE Onibus;");  // Força a falha no banco de dados
+    
+    ASSERT_THROW({
+        onibusService->listarTodosOnibus();  
+    }, std::runtime_error);
 }
