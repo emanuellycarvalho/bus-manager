@@ -1,4 +1,4 @@
-#include "../include/Onibus.hpp"
+#include "Onibus.hpp"
 #include <iostream>
 
 Onibus::Onibus(string placa, int numAssentos, double velocidadeMedia){    
@@ -12,6 +12,7 @@ Onibus::Onibus(string placa, int numAssentos, double velocidadeMedia){
             throw invalid_argument("Velocidade média precisa ser maior que zero");
         }
 
+        this->id = 0;
         this->placa = placa;
         this->numAssentos = numAssentos;
         this->velocidadeMedia = velocidadeMedia;
@@ -32,13 +33,42 @@ Onibus::Onibus(string placa, int numAssentos, double velocidadeMedia, double val
             throw invalid_argument("Valor por km precisa ser maior que zero");
         }
 
+        this->id = 0;
         this->placa = placa;
         this->numAssentos = numAssentos;
         this->velocidadeMedia = velocidadeMedia;
         this->valorKm = valorKm;
     }
 
-string Onibus::getPlaca() {
+    Onibus::Onibus(int id, string placa, int numAssentos, double velocidadeMedia, double valorKm){      
+        if(id <= 0) {
+            throw invalid_argument("Id precisa ser maior que zero");
+        }
+        if(placa.empty()) {
+            throw invalid_argument("Placa não pode ser vazia");
+        }
+        if(numAssentos <= 0) {
+            throw invalid_argument("Número de assentos precisa ser maior que zero");
+        }
+        if(velocidadeMedia <= 0) {
+            throw invalid_argument("Velocidade média não pode ser negativa");
+        }
+        if(valorKm <= 0) {
+            throw invalid_argument("Valor por km precisa ser maior que zero");
+        }
+
+        this->id = id;
+        this->placa = placa;
+        this->numAssentos = numAssentos;
+        this->velocidadeMedia = velocidadeMedia;
+        this->valorKm = valorKm;
+    }
+
+int Onibus::getId() const {
+    return id;
+}
+
+string Onibus::getPlaca() const {
     return placa;
 }
 
@@ -49,7 +79,7 @@ void Onibus::setPlaca(string placa) {
     this->placa = placa;
 }
 
-int Onibus::getNumAssentos() {
+int Onibus::getNumAssentos() const {
     return numAssentos;
 }
 
@@ -60,7 +90,7 @@ void Onibus::setNumAssentos(int numAssentos) {
     this->numAssentos = numAssentos;
 }
 
-double Onibus::getVelocidadeMedia() {
+double Onibus::getVelocidadeMedia() const {
     return velocidadeMedia;
 }
 
@@ -71,7 +101,7 @@ void Onibus::setVelocidadeMedia(double velocidadeMedia) {
     this->velocidadeMedia = velocidadeMedia;
 }
 
-double Onibus::getValorKm() {
+double Onibus::getValorKm() const {
     return valorKm;
 }
 

@@ -1,4 +1,4 @@
-#include "../include/Parada.hpp"
+#include "Parada.hpp"
 #include <iostream>
 
 int Parada::contadorId = 0;
