@@ -24,11 +24,8 @@ jobs:
 
     - name: Build the project
       run: |
-        rm -rf build
-        mkdir -p build
-        cd build
-        cmake ..
-        make
+        make clean
+        make all
 
     - name: Run Tests with Coverage
       run: |
