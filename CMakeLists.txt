@@ -11,11 +11,13 @@ include_directories(${GTEST_INCLUDE_DIRS})
 
 # Add the source files
 set(SOURCES 
-    src/Data.cpp
-    src/Onibus.cpp
-    src/Parada.cpp
-    src/Reserva.cpp
-    src/Viagem.cpp
+    src/models/Data.cpp
+    src/models/Database.cpp
+    src/models/Onibus.cpp
+    src/models/Parada.cpp
+    src/models/Reserva.cpp
+    src/models/Viagem.cpp
+    src/services/OnibusService.cpp
     tests/Testes.cpp
 )
 
