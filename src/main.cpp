@@ -13,43 +13,54 @@ public:
     void menu() {
         int choice;
         do {
+            cout << "------------------------------------------------------------------------------------\n";
+            cout << "MENU" << endl;
+            cout << "------------------------------------------------------------------------------------\n";
             cout << "1. Adicionar Ônibus\n";
             cout << "2. Listar Ônibus\n";
             cout << "3. Atualizar Ônibus\n";
             cout << "4. Deletar Ônibus\n";
-            cout << "---------------------\n";
+            cout << "------------------------------------------------------------------------------------\n";
             cout << "5. Adicionar Parada\n";
             cout << "6. Listar Paradas\n";
             cout << "7. Atualizar Parada\n";
             cout << "8. Deletar Parada\n";
-            cout << "---------------------\n";
+            cout << "------------------------------------------------------------------------------------\n";
             cout << "9. Sair\n";
             cout << "Escolha: ";
             cin >> choice;
 
             switch (choice) {
                 case 1:
+                    system("clear");
                     adicionarOnibus();
                     break;
                 case 2:
+                    system("clear");
                     listarOnibus();
                     break;
                 case 3:
+                    system("clear");
                     atualizarOnibus();
                     break;
                 case 4:
+                    system("clear");
                     deletarOnibus();
                     break;
                 case 5:
+                    system("clear");
                     adicionarParada();
                     break;
                 case 6:
+                    system("clear");
                     listarParadas();
                     break;
                 case 7:
+                    system("clear");
                     atualizarParada();
                     break;
                 case 8:
+                    system("clear");
                     deletarParada();
                     break;
                 case 9:
@@ -80,10 +91,14 @@ private:
         cin >> valor_km;
 
         Onibus onibus(placa, num_assentos, velocidade_media, valor_km);
-        onibusService.adicionarOnibus(onibus);
+        if(onibusService.adicionarOnibus(onibus)){
+            cout << "Ônibus adicionado\n";
+        }
     }
 
     void listarOnibus() {
+        cout << "ONIBUS:" << endl;
+        cout << "------------------------------------------------------------------------------------\n";
         vector<Onibus> onibusList = onibusService.listarTodosOnibus();
         for (const auto &onibus : onibusList) {
             cout << "ID: " << onibus.getId() << ", Placa: " << onibus.getPlaca()
@@ -91,7 +106,6 @@ private:
                       << ", Velocidade: " << onibus.getVelocidadeMedia()
                       << ", Valor/km: " << onibus.getValorKm() << "\n";
         }
-            cout << "------------------------------------------------------------------------------------\n";
     }
 
     void atualizarOnibus() {
@@ -121,6 +135,7 @@ private:
             onibus->setValorKm(valor_km);
 
             onibusService.atualizarOnibus(*onibus);
+            cout << "Ônibus adicionado\n";
             delete onibus;
         } else {
             cout << "Ônibus não encontrado!\n";
@@ -133,6 +148,7 @@ private:
         cout << "Digite o ID do ônibus para deletar: ";
         cin >> id;
         onibusService.deletarOnibus(id);
+        cout << "Ônibus deletado\n";
     }
 
     void adicionarParada() {
@@ -146,15 +162,17 @@ private:
 
         Parada parada(nome, distancia_partida);
         paradaService.adicionarParada(parada);
+        cout << "Parada adicionada\n";
     }
 
     void listarParadas() {
+        cout << "PARADAS:" << endl;
+        cout << "------------------------------------------------------------------------------------\n";
         vector<Parada> paradaList = paradaService.listarTodasParadas();
         for (const auto &parada : paradaList) {
             cout << "ID: " << parada.getId() << ", Nome: " << parada.getNome()
                       << ", Distância: " << parada.getDistanciaPartida() << "\n";
         }
-        cout << "------------------------------------------------------------------------------------\n";
     }
 
     void atualizarParada() {
@@ -177,6 +195,7 @@ private:
             parada->setDistanciaPartida(distancia_partida);
 
             paradaService.atualizarParada(*parada);
+            cout << "Parada atualizada\n";
             delete parada;
         } else {
             cout << "Parada não encontrada!\n";
@@ -189,6 +208,7 @@ private:
         cout << "Digite o ID da parada para deletar: ";
         cin >> id;
         paradaService.deletarParada(id);
+        cout << "Parada deletada\n";
     }
 };
 
