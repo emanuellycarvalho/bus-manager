@@ -12,8 +12,8 @@ class ParadaService {
         Database &db;
 
     public:
+        void verificarEInicializarTabela();
         explicit ParadaService(Database &database);
-
         int adicionarParada(const Parada &parada);
         Parada* buscarParadaPorId(int id);
         std::vector<Parada> listarTodasParadas();

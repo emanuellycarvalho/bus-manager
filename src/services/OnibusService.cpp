@@ -3,7 +3,22 @@
 
 OnibusService::OnibusService(Database &database) : db(database) {}
 
+void OnibusService::verificarEInicializarTabela() {
+    std::string checkTableQuery = "SELECT name FROM sqlite_master WHERE type='table' AND name='Onibus';";
+    sqlite3_stmt *stmt;
+    if (sqlite3_prepare_v2(db.getConnection(), checkTableQuery.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
+        throw std::runtime_error("Erro ao preparar consulta para verificar tabela.");
+    }
+
+    if (sqlite3_step(stmt) != SQLITE_ROW) {
+        db.initializeTables();  
+    }
+
+    sqlite3_finalize(stmt);
+}
+
 int OnibusService::adicionarOnibus(const Onibus &onibus) {
+    verificarEInicializarTabela();
     std::stringstream query;
     query << "INSERT INTO Onibus (placa, num_assentos, velocidade_media, valor_km) VALUES ('"
           << onibus.getPlaca() << "', " << onibus.getNumAssentos() << ", " << onibus.getVelocidadeMedia()
@@ -13,6 +28,7 @@ int OnibusService::adicionarOnibus(const Onibus &onibus) {
 }
 
 Onibus* OnibusService::buscarOnibusPorId(int id) {
+    verificarEInicializarTabela();
     std::stringstream query;
     query << "SELECT * FROM Onibus WHERE id = " << id << ";";
     
@@ -39,6 +55,7 @@ Onibus* OnibusService::buscarOnibusPorId(int id) {
 }
 
 std::vector<Onibus> OnibusService::listarTodosOnibus() {
+    verificarEInicializarTabela();
     std::vector<Onibus> onibusList;
     const std::string query = "SELECT * FROM Onibus;";
     
@@ -68,6 +85,7 @@ std::vector<Onibus> OnibusService::listarTodosOnibus() {
 }
 
 void OnibusService::atualizarOnibus(const Onibus &onibus) {
+    verificarEInicializarTabela();
     std::stringstream query;
     query << "UPDATE Onibus SET placa = '" << onibus.getPlaca()
           << "', num_assentos = " << onibus.getNumAssentos()
@@ -78,6 +96,7 @@ void OnibusService::atualizarOnibus(const Onibus &onibus) {
 }
 
 void OnibusService::deletarOnibus(int id) {
+    verificarEInicializarTabela();
     std::stringstream query;
     query << "DELETE FROM Onibus WHERE id = " << id << ";";
     db.execute(query.str());

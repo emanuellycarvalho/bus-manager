@@ -3,7 +3,23 @@
 
 ParadaService::ParadaService(Database &database) : db(database) {}
 
+void ParadaService::verificarEInicializarTabela() {
+    std::string checkTableQuery = "SELECT name FROM sqlite_master WHERE type='table' AND name='Parada';";
+    sqlite3_stmt *stmt;
+    if (sqlite3_prepare_v2(db.getConnection(), checkTableQuery.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
+        throw std::runtime_error("Erro ao preparar consulta para verificar tabela.");
+    }
+
+    if (sqlite3_step(stmt) != SQLITE_ROW) {
+        db.initializeTables();
+    }
+
+    sqlite3_finalize(stmt);
+}
+
 int ParadaService::adicionarParada(const Parada &parada) {
+    verificarEInicializarTabela();
+
     std::stringstream query;
     query << "INSERT INTO Parada (nome, distancia_partida) VALUES ('"
           << parada.getNome() << "', " << parada.getDistanciaPartida() << ");";
@@ -12,6 +28,8 @@ int ParadaService::adicionarParada(const Parada &parada) {
 }
 
 Parada* ParadaService::buscarParadaPorId(int id) {
+    verificarEInicializarTabela();
+
     std::stringstream query;
     query << "SELECT * FROM Parada WHERE id = " << id << ";";
     
@@ -37,12 +55,14 @@ Parada* ParadaService::buscarParadaPorId(int id) {
 }
 
 std::vector<Parada> ParadaService::listarTodasParadas() {
+    verificarEInicializarTabela();
+
     std::vector<Parada> paradaList;
     const std::string query = "SELECT * FROM Parada;";
-    
+
     sqlite3_stmt *stmt;
     if (sqlite3_prepare_v2(db.getConnection(), query.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
-        throw std::runtime_error("Erro ao preparar consulta: " + std::string(sqlite3_errmsg(db.getConnection())));
+        throw std::runtime_error("Erro ao preparar consulta.");
     }
 
     while (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -60,6 +80,8 @@ std::vector<Parada> ParadaService::listarTodasParadas() {
 }
 
 void ParadaService::atualizarParada(const Parada &parada) {
+    verificarEInicializarTabela();
+
     std::stringstream query;
     query << "UPDATE Parada SET nome = '" << parada.getNome()
           << "', distancia_partida = " << parada.getDistanciaPartida()
@@ -68,6 +90,8 @@ void ParadaService::atualizarParada(const Parada &parada) {
 }
 
 void ParadaService::deletarParada(int id) {
+    verificarEInicializarTabela();
+
     std::stringstream query;
     query << "DELETE FROM Parada WHERE id = " << id << ";";
     db.execute(query.str());
