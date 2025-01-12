@@ -55,7 +55,6 @@ Onibus* OnibusService::buscarOnibusPorId(int id) {
 }
 
 std::vector<Onibus> OnibusService::listarTodosOnibus() {
-    verificarEInicializarTabela();
     std::vector<Onibus> onibusList;
     const std::string query = "SELECT * FROM Onibus;";
     
