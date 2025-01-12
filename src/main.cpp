@@ -136,7 +136,7 @@ private:
         double distancia_partida;
 
         cout << "Digite o nome da parada: ";
-        getline(cin, nome);
+        cin >> nome;
         cout << "Digite a distância de partida (km): ";
         cin >> distancia_partida;
 
