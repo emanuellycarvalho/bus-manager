@@ -12,7 +12,7 @@ INTEGRATION_TEST_DIR = tests/integration
 # Fontes organizados por subdiretórios
 SRC_MODELS = $(wildcard $(SRC_DIR)/models/*.cpp)
 SRC_SERVICES = $(wildcard $(SRC_DIR)/services/*.cpp)
-SRC_MAIN = $(wildcard $(SRC_DIR)/*.cpp)
+SRC_MAIN = $(SRC_DIR)/main.cpp
 SRC = $(SRC_MODELS) $(SRC_SERVICES) $(filter-out $(SRC_DIR)/main.cpp, $(SRC_MAIN))
 
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
@@ -25,9 +25,10 @@ INTEGRATION_TEST_SOURCES = $(wildcard $(INTEGRATION_TEST_DIR)/*.cpp)
 UNIT_TEST_OBJ = $(UNIT_TEST_SOURCES:$(UNIT_TEST_DIR)/%.cpp=$(BUILD_DIR)/unit/%.o)
 INTEGRATION_TEST_OBJ = $(INTEGRATION_TEST_SOURCES:$(INTEGRATION_TEST_DIR)/%.cpp=$(BUILD_DIR)/integration/%.o)
 
-# Executáveis para os testes
+# Executáveis para os testes e a main
 UNIT_TEST_EXEC = $(BUILD_DIR)/unit_tests_executavel
 INTEGRATION_TEST_EXEC = $(BUILD_DIR)/integration_tests_executavel
+MAIN_EXEC = $(BUILD_DIR)/main_executavel
 
 # Criar diretório de build
 $(BUILD_DIR):
@@ -62,6 +63,10 @@ $(UNIT_TEST_EXEC): $(OBJ) $(UNIT_TEST_OBJ)
 $(INTEGRATION_TEST_EXEC): $(OBJ) $(INTEGRATION_TEST_OBJ)
 	$(CXX) $(OBJ) $(INTEGRATION_TEST_OBJ) $(LDFLAGS) -o $(INTEGRATION_TEST_EXEC)
 
+# Compilação do executável da main
+$(MAIN_EXEC): $(OBJ) $(SRC_MAIN)
+	$(CXX) $(OBJ) $(SRC_MAIN) $(CXXFLAGS) $(LDFLAGS) -o $(MAIN_EXEC)
+
 # Rodar os testes unitários
 run_unit_tests: $(UNIT_TEST_EXEC)
 	./$(UNIT_TEST_EXEC)
@@ -69,6 +74,10 @@ run_unit_tests: $(UNIT_TEST_EXEC)
 # Rodar os testes de integração
 run_integration_tests: $(INTEGRATION_TEST_EXEC)
 	./$(INTEGRATION_TEST_EXEC)
+
+# Rodar o executável principal
+run_main: $(MAIN_EXEC)
+	./$(MAIN_EXEC)
 
 # Limpeza dos arquivos gerados
 clean:
