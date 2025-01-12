@@ -72,9 +72,9 @@ private:
         cin >> placa;
         cout << "Digite o número de assentos: ";
         cin >> num_assentos;
-        cout << "Digite a velocidade média: ";
+        cout << "Digite a velocidade média (km/h): ";
         cin >> velocidade_media;
-        cout << "Digite o valor por km: ";
+        cout << "Digite o valor por km (R$): ";
         cin >> valor_km;
 
         Onibus onibus(placa, num_assentos, velocidade_media, valor_km);
@@ -124,6 +124,7 @@ private:
     }
 
     void deletarOnibus() {
+        listarOnibus();
         int id;
         cout << "Digite o ID do ônibus para deletar: ";
         cin >> id;
@@ -135,8 +136,8 @@ private:
         double distancia_partida;
 
         cout << "Digite o nome da parada: ";
-        cin >> nome;
-        cout << "Digite a distância de partida: ";
+        getline(cin, nome);
+        cout << "Digite a distância de partida (km): ";
         cin >> distancia_partida;
 
         Parada parada(nome, distancia_partida);

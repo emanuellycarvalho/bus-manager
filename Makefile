@@ -77,6 +77,7 @@ run_integration_tests: $(INTEGRATION_TEST_EXEC)
 
 # Rodar o executável principal
 run_main: $(MAIN_EXEC)
+	clear
 	./$(MAIN_EXEC)
 
 # Limpeza dos arquivos gerados
