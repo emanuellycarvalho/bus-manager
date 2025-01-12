@@ -17,10 +17,12 @@ public:
             cout << "2. Listar Ônibus\n";
             cout << "3. Atualizar Ônibus\n";
             cout << "4. Deletar Ônibus\n";
+            cout << "---------------------\n";
             cout << "5. Adicionar Parada\n";
             cout << "6. Listar Paradas\n";
             cout << "7. Atualizar Parada\n";
             cout << "8. Deletar Parada\n";
+            cout << "---------------------\n";
             cout << "9. Sair\n";
             cout << "Escolha: ";
             cin >> choice;
@@ -89,9 +91,11 @@ private:
                       << ", Velocidade: " << onibus.getVelocidadeMedia()
                       << ", Valor/km: " << onibus.getValorKm() << "\n";
         }
+            cout << "------------------------------------------------------------------------------------\n";
     }
 
     void atualizarOnibus() {
+        listarOnibus();
         int id;
         cout << "Digite o ID do ônibus para atualizar: ";
         cin >> id;
@@ -150,9 +154,11 @@ private:
             cout << "ID: " << parada.getId() << ", Nome: " << parada.getNome()
                       << ", Distância: " << parada.getDistanciaPartida() << "\n";
         }
+        cout << "------------------------------------------------------------------------------------\n";
     }
 
     void atualizarParada() {
+        listarParadas();
         int id;
         cout << "Digite o ID da parada para atualizar: ";
         cin >> id;
@@ -178,6 +184,7 @@ private:
     }
 
     void deletarParada() {
+        listarParadas();
         int id;
         cout << "Digite o ID da parada para deletar: ";
         cin >> id;
